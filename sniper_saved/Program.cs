@@ -12,7 +12,8 @@ class Form1 : Form
 
     const uint ADDR_HPS = 0x27;
     const uint ADDR_STA = 0x4F;
-    const uint ADDR_XPK = 0x6B;
+    const uint ADDR_EXP = 0x6F;
+    const uint ADDR_K = 0x83;
     const uint ADDR_MAP = 0x87;
     const uint ADDR_POS = 0x8B;
     const uint ADDR_NAM = 0xAC;
@@ -226,11 +227,12 @@ class Form1 : Form
             br.BaseStream.Position = ADDR_STA;
             for (int i = 0; i < MAX_WP; i++)
                 tb_wp[i].Text = br.ReadSingle().ToString();
-            br.BaseStream.Position = ADDR_XPK;
-            tb_kl.Text = br.ReadSingle().ToString();
+            br.BaseStream.Position = ADDR_EXP;
             tb_xp1.Text = br.ReadSingle().ToString();
             tb_xp2.Text = br.ReadInt32().ToString();
             tb_pt.Text = br.ReadInt32().ToString();
+            br.BaseStream.Position = ADDR_K;
+            tb_kl.Text = br.ReadSingle().ToString();
             br.BaseStream.Position = ADDR_MAP;
             offs = br.ReadInt32();
             br.BaseStream.Position = ADDR_POS + offs;
@@ -268,11 +270,12 @@ class Form1 : Form
             bw.BaseStream.Position = ADDR_STA;
             for (int i = 0; i < MAX_WP; i++)
                 bw.Write(float.Parse(tb_wp[i].Text));
-            bw.BaseStream.Position = ADDR_XPK;
-            bw.Write(float.Parse(tb_kl.Text));
+            bw.BaseStream.Position = ADDR_EXP;
             bw.Write(float.Parse(tb_xp1.Text));
             bw.Write(int.Parse(tb_xp2.Text));
             bw.Write(int.Parse(tb_pt.Text));
+            bw.BaseStream.Position = ADDR_K;
+            bw.Write(float.Parse(tb_kl.Text));
             bw.BaseStream.Position = ADDR_POS + offs;
             bw.Write(float.Parse(tb_x.Text));
             bw.Write(float.Parse(tb_y.Text));
